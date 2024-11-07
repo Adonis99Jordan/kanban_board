@@ -3,3 +3,43 @@ DROP DATABASE IF EXISTS kanban_db;
 
 -- CREATE DATABASE
 CREATE DATABASE kanban_db;
+
+-- USE DATABASE
+USE kanban_db;
+
+-- CREATE USERS TABLE
+CREATE TABLE users (
+    user_id INT AUTO_INCREMENt PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- CREATE BOARDS TABLE 
+CREATE TABLE BOARD (
+    board_id INT AUTO_INCREMENT PRIMARY KEY,
+    board_name VARCHAR(100) NOT NULL,
+    user_id INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES user(user_id)
+);
+
+-- CREATE LISTS TABLE
+CREATE TABLE lists (
+    list_id INT AUTO_INCREMENT PRIMARY KEY,
+    list_name VARCHAR(100) NOT NULL,
+    board_id INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (board_id) REFERENCES boards(board_id)
+);
+
+-- CREATE TASKS TABLE
+CREATE TABLE tasks (
+    task_id INT AUTO_INCREMENT PRIMARY KEY,
+    task_name VARCHAR(100) NOT NULL,
+    description TEXT,
+    list_id INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (list_id) REFERENCES lists(list_id)
+);
